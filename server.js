@@ -11,6 +11,11 @@ app.get("/", (req, res) => {
   res.send("SUNVITA WhatsApp Bot is running ✅");
 });
 
+// 👇 PASTE PRIVACY POLICY CODE HERE
+
+
+
+
 // Meta webhook verification
 app.get("/webhook", (req, res) => {
   const mode = req.query["hub.mode"];

@@ -59,12 +59,26 @@ app.get("/webhook", (req, res) => {
 
 // Receive WhatsApp messages
 app.post("/webhook", (req, res) => {
-  console.log("WhatsApp webhook received:");
-  console.log(JSON.stringify(req.body, null, 2));
+    console.log("WhatsApp webhook received:");
+    console.log(JSON.stringify(req.body, null, 2));
 
-  res.sendStatus(200);
+    try {
+        const value = req.body?.entry?.[0]?.changes?.[0]?.value;
+        const message = value?.messages?.[0];
+
+        if (message) {
+            const sender = message.from;
+            const text = message.text?.body || "";
+
+            console.log("CUSTOMER NUMBER:", sender);
+            console.log("CUSTOMER MESSAGE:", text);
+        }
+    } catch (error) {
+        console.error("Webhook error:", error);
+    }
+
+    res.sendStatus(200);
 });
-
 app.listen(PORT, () => {
   console.log(`SUNVITA Bot running on port ${PORT}`);
 });
